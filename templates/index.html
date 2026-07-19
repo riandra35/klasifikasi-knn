@@ -1,28 +1,53 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prediksi Bunga Iris</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body class="container mt-5">
-    <h2>Prediksi Jenis Bunga Iris</h2>
-    
-    <form action="/predict" method="POST" class="mt-3">
-        <div class="row">
-            <div class="col-md-3"><input type="number" step="0.1" name="sepal_l" value="{{ sl or '' }}" class="form-control" placeholder="Sepal Length" required></div>
-            <div class="col-md-3"><input type="number" step="0.1" name="sepal_w" value="{{ sw or '' }}" class="form-control" placeholder="Sepal Width" required></div>
-            <div class="col-md-3"><input type="number" step="0.1" name="petal_l" value="{{ pl or '' }}" class="form-control" placeholder="Petal Length" required></div>
-            <div class="col-md-3"><input type="number" step="0.1" name="petal_w" value="{{ pw or '' }}" class="form-control" placeholder="Petal Width" required></div>
-        </div>
-        <button type="submit" class="btn btn-primary mt-3">Prediksi</button>
-    </form>
+    <div class="card shadow-sm p-4">
+        <h2 class="mb-4 text-center">Prediksi Jenis Bunga Iris</h2>
+        
+        <form action="/predict" method="POST">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Sepal Length</label>
+                    <input type="number" step="0.1" name="sepal_l" value="{{ sl }}" class="form-control" placeholder="Contoh: 5.0" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Sepal Width</label>
+                    <input type="number" step="0.1" name="sepal_w" value="{{ sw }}" class="form-control" placeholder="Contoh: 3.6" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Petal Length</label>
+                    <input type="number" step="0.1" name="petal_l" value="{{ pl }}" class="form-control" placeholder="Contoh: 1.4" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Petal Width</label>
+                    <input type="number" step="0.1" name="petal_w" value="{{ pw }}" class="form-control" placeholder="Contoh: 0.2" required>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary px-5">Prediksi Sekarang</button>
+            </div>
+        </form>
 
-    {% if prediction %}
-        <div class="alert alert-success mt-4">Hasil Prediksi: <strong>{{ prediction }}</strong></div>
-    {% endif %}
+        <!-- Menampilkan Hasil Prediksi -->
+        {% if prediction %}
+            <div class="alert alert-success mt-4 text-center fs-5">
+                Hasil Prediksi: <strong>Bunga Iris {{ prediction }}</strong>
+            </div>
+        {% endif %}
 
-    {% if error %}
-        <div class="alert alert-danger mt-4">Terjadi Kesalahan: {{ error }}</div>
-    {% endif %}
+        <!-- Menampilkan Pesan Error -->
+        {% if error %}
+            <div class="alert alert-danger mt-4">
+                <strong>Terjadi Kesalahan:</strong> {{ error }}
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>
