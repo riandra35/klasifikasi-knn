@@ -1,14 +1,18 @@
-from flask import Flask, render_template, request, jsonify
-from sklearn.datasets import load_iris
-from sklearn.neighbors import KNeighborsClassifier
+from flask import Flask, render_template, request
+import pickle
 import numpy as np
+import os
 
 app = Flask(__name__)
 
-# Training Model
-iris = load_iris()
-model = KNeighborsClassifier(n_neighbors=3)
-model.fit(iris.data, iris.target)
+# Load model dari file pickle
+# Pastikan 'model.pkl' ada di folder project
+model_path = 'model.pkl'
+with open(model_path, 'rb') as f:
+    model = pickle.load(f)
+
+# Target names sesuai urutan dataset Iris
+target_names = ['setosa', 'versicolor', 'virginica']
 
 @app.route('/')
 def home():
@@ -17,15 +21,17 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Mengambil input dari form (mengubah string ke float)
+        # Mengambil input dari form
         sepal_l = float(request.form['sepal_l'])
         sepal_w = float(request.form['sepal_w'])
         petal_l = float(request.form['petal_l'])
         petal_w = float(request.form['petal_w'])
         
         input_data = np.array([[sepal_l, sepal_w, petal_l, petal_w]])
+        
+        # Prediksi menggunakan model yang sudah di-load
         prediction = model.predict(input_data)
-        result = iris.target_names[prediction[0]]
+        result = target_names[prediction[0]]
         
         return render_template('index.html', prediction=result)
     except Exception as e:
