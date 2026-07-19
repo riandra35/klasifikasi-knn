@@ -6,18 +6,23 @@
 </head>
 <body class="container mt-5">
     <h2>Prediksi Jenis Bunga Iris</h2>
+    
     <form action="/predict" method="POST" class="mt-3">
         <div class="row">
-            <div class="col-md-3"><input type="number" step="0.1" name="sepal_l" class="form-control" placeholder="Sepal Length" required></div>
-            <div class="col-md-3"><input type="number" step="0.1" name="sepal_w" class="form-control" placeholder="Sepal Width" required></div>
-            <div class="col-md-3"><input type="number" step="0.1" name="petal_l" class="form-control" placeholder="Petal Length" required></div>
-            <div class="col-md-3"><input type="number" step="0.1" name="petal_w" class="form-control" placeholder="Petal Width" required></div>
+            <div class="col-md-3"><input type="number" step="0.1" name="sepal_l" value="{{ sl or '' }}" class="form-control" placeholder="Sepal Length" required></div>
+            <div class="col-md-3"><input type="number" step="0.1" name="sepal_w" value="{{ sw or '' }}" class="form-control" placeholder="Sepal Width" required></div>
+            <div class="col-md-3"><input type="number" step="0.1" name="petal_l" value="{{ pl or '' }}" class="form-control" placeholder="Petal Length" required></div>
+            <div class="col-md-3"><input type="number" step="0.1" name="petal_w" value="{{ pw or '' }}" class="form-control" placeholder="Petal Width" required></div>
         </div>
         <button type="submit" class="btn btn-primary mt-3">Prediksi</button>
     </form>
 
     {% if prediction %}
         <div class="alert alert-success mt-4">Hasil Prediksi: <strong>{{ prediction }}</strong></div>
+    {% endif %}
+
+    {% if error %}
+        <div class="alert alert-danger mt-4">Terjadi Kesalahan: {{ error }}</div>
     {% endif %}
 </body>
 </html>
