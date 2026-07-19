@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Load model dari file pickle
 # Pastikan 'model.pkl' ada di folder project
-model_path = 'model.pkl'
+model_path = 'knn_model.pkl'
 with open(model_path, 'rb') as f:
     model = pickle.load(f)
 
